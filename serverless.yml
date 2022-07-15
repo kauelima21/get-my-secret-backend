@@ -6,6 +6,9 @@ plugins:
   - serverless-webpack
 
 custom:
+  SecretsTable:
+    name: !Ref SecretsTable
+    arn: !GetAtt SecretsTable.Arn
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true # enable auto-packing of external modules
@@ -15,6 +18,14 @@ provider:
   runtime: nodejs14.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
+  environment:
+    SECRETS_TABLE_NAME: ${self:custom.SecretsTable.name}
+  iamRoleStatements:
+    - ${file(config/iam/SecretsTableIAM.yml):SecretsTableIAM}
+
+resources:
+  Resources:
+    SecretsTable: ${file(config/resources/SecretsTable.yml):SecretsTable}
 
 functions:
   storeSecret:
