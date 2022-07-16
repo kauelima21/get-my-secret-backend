@@ -11,4 +11,10 @@ export const JsonResponse = {
       body: JSON.stringify(data),
     }
   },
+  _204(data) {
+    return {
+      statusCode: 204,
+      body: JSON.stringify(data),
+    }
+  },
 }
