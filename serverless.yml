@@ -34,3 +34,21 @@ functions:
       - http:
           method: post
           path: /secrets
+  getSecret:
+    handler: src/handlers/getSecret.handler
+    events:
+      - http:
+          method: patch
+          path: /secret/{uuid}/{encryptionKey}
+  destroySecret:
+    handler: src/handlers/destroySecret.handler
+    events:
+      - http:
+          method: delete
+          path: /destroy/{uuid}
+  setView:
+    handler: src/handlers/setView.handler
+    events:
+      - http:
+          method: patch
+          path: /secret/{uuid}
