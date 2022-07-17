@@ -3,9 +3,7 @@ export const JsonResponse = {
     return {
       statusCode: 200,
       headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify(data),
     }
@@ -14,7 +12,7 @@ export const JsonResponse = {
     return {
       statusCode: 201,
       headers: {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify(data),
     }
@@ -23,9 +21,7 @@ export const JsonResponse = {
     return {
       statusCode: 204,
       headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify(data),
     }
