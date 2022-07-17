@@ -6,19 +6,25 @@ import { Secret } from "../model/Secret";
 import { Dynamo } from "../lib/dynamo";
 
 const storeSecret = async (event) => {
-  const { content, password } = event.body;
+  const { content } = event.body;
   const encryptionKey = shortUUID.generate();
 
-  if (password) {
-    password = aes256(encryptionKey, password);
+  let password = '';
+
+  if (event.body.password) {
+    password = aes256.encrypt(encryptionKey, event.body.password);
   }
 
   const secret = new Secret(aes256.encrypt(encryptionKey, content));
 
   const dynamo = new Dynamo();
 
-  await dynamo.store({ ...secret, password });
+  if (password) {
+    await dynamo.store({ ...secret, password });
+    return JsonResponse._201({ secretUUID: secret.uuid, encryptionKey });
+  }
 
+  await dynamo.store(secret);
   return JsonResponse._201({ secretUUID: secret.uuid, encryptionKey });
 }
 
