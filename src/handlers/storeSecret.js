@@ -1,14 +1,19 @@
 import aes256 from "aes256";
 import middyfy from "../lib/middyfy"
 import shortUUID from "short-uuid";
+import createHttpError from "http-errors";
 import { JsonResponse } from "../lib/JsonResponse";
 import { Secret } from "../model/Secret";
 import { Dynamo } from "../lib/dynamo";
 
 const storeSecret = async (event) => {
+  if (!event.body.content) {
+    throw new createHttpError.InternalServerError("Não pode criar segredos vazios.");
+  }
+
   const { content } = event.body;
   const encryptionKey = shortUUID.generate();
-
+  
   let password = '';
 
   if (event.body.password) {
