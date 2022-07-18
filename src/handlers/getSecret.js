@@ -8,8 +8,8 @@ const getSecret = async (event) => {
   const { uuid, encryptionKey } = event.pathParameters;
   const passwordFromBody = '';
 
-  if (event.body) {
-    passwordFromBody = { password } = event.body;
+  if (event.body.password) {
+    passwordFromBody = event.body.password;
   }
 
   const dynamo = new Dynamo();
