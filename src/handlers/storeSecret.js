@@ -7,7 +7,7 @@ import { Secret } from "../model/Secret";
 import { Dynamo } from "../lib/dynamo";
 
 const storeSecret = async (event) => {
-  if (!event.body.content) {
+  if (!event.body && !event.body.hasOwnProperty('content')) {
     throw new createHttpError.InternalServerError("Não pode criar segredos vazios.");
   }
 
@@ -16,7 +16,7 @@ const storeSecret = async (event) => {
   
   let password = '';
 
-  if (event.body.password) {
+  if (event.body.hasOwnProperty('password')) {
     password = aes256.encrypt(encryptionKey, event.body.password);
   }
 
@@ -24,12 +24,13 @@ const storeSecret = async (event) => {
 
   const dynamo = new Dynamo();
 
+  let data = secret;
+
   if (password) {
-    await dynamo.store({ ...secret, password });
-    return JsonResponse._201({ secretUUID: secret.uuid, encryptionKey });
+    data = { ...data, password };
   }
 
-  await dynamo.store(secret);
+  await dynamo.store(data);
   return JsonResponse._201({ secretUUID: secret.uuid, encryptionKey });
 }
 

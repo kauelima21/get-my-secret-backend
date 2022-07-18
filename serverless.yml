@@ -33,7 +33,7 @@ functions:
     events:
       - http:
           method: post
-          path: /secrets
+          path: /secret
           cors: true
   getSecret:
     handler: src/handlers/getSecret.handler
@@ -42,18 +42,3 @@ functions:
           method: patch
           path: /secret/{uuid}/{encryptionKey}
           cors: true
-  destroySecret:
-    handler: src/handlers/destroySecret.handler
-    events:
-      - http:
-          method: delete
-          path: /destroy/{uuid}
-          cors: true
-  setView:
-    handler: src/handlers/setView.handler
-    events:
-      - http:
-          method: patch
-          path: /secret/{uuid}
-          cors: true
-

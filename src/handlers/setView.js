@@ -1,15 +1,7 @@
-import middyfy from "../lib/middyfy"
-import { JsonResponse } from "../lib/JsonResponse";
-import { Dynamo } from "../lib/dynamo";
+import aes256 from "aes256";
 
-const setView = async (event) => {
-  const { uuid } = event.pathParameters;
-
-  const dynamo = new Dynamo();
-
-  const viewedSecret = await dynamo.update(uuid);
-
-  return JsonResponse._204(viewedSecret);
+export const setView = async (dynamo, encryptionKey, { uuid, content }) => {
+  const data = aes256.decrypt(encryptionKey, content);
+  await dynamo.destroy(uuid);
+  return data;
 }
-
-export const handler = middyfy(setView);

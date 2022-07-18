@@ -17,24 +17,21 @@ export class Dynamo {
   }
   
   async get(uuid) {
-    let result;
+    let secret;
 
     try {
-      result = await this.dynamoDb.get({
+      const result = await this.dynamoDb.get({
         TableName: this.TableName,
         Key: { uuid },
       }).promise();
+
+      secret = result.Item;
     } catch (err) {
       console.log(err);
       throw new createHttpError.InternalServerError();
     }
 
-    if (!result.Item) {
-      console.log(err);
-      throw new createHttpError.NotFound(`Não foram encontrados registros com o uuid "${uuid}"`);
-    }
-
-    return result.Item;
+    return secret;
   }
   
   async update(uuid) {
