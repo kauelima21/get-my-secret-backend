@@ -11,8 +11,10 @@ O projeto foi criado utilizando serverless framework com template node-aws, port
 
 Faça o clone do repositório e depois siga estes passos:
 
-instale os pacotes necessários
+entre na pasta do projeto, abra um terminal e instale os pacotes necessários
 ```
+  cd get-my-secret-backend/
+
   yarn
 ```
  caso utilize npm o comando é:
@@ -26,6 +28,9 @@ faça o deploy
 
   // ou a versão mais curta
   sls deploy
+
+  // caso a região onde você criou seu usuário seja diferente de us-east-1, altere no arquivo serverless.yml ou faça o deploy com este comando, onde <region> é a região escolhida.
+  sls deploy --region <region>
 ```
 
 Aguarde enquanto o projeto é enviado para a aws. O serverless framework cuida disso para você ;)
