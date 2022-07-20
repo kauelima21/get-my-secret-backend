@@ -1,9 +1,8 @@
-import middyfy from "../lib/middyfy"
 import aes256 from "aes256";
-import { JsonResponse } from "../lib/JsonResponse";
-import { Dynamo } from "../lib/dynamo";
+import middyfy from "../lib/middyfy"
 import createHttpError from "http-errors";
-import { setView } from "./setView";
+import { Dynamo } from "../lib/dynamo";
+import { JsonResponse } from "../lib/JsonResponse";
 
 const getSecret = async (event) => {
   const { uuid, encryptionKey } = event.pathParameters;
@@ -18,7 +17,11 @@ const getSecret = async (event) => {
   const secret = await dynamo.get(uuid);
 
   if (!secret) {
-    console.log(secret);
+    throw new createHttpError.NotFound("Segredo não existe");
+  }
+
+  if (secret.views > 0) {
+    await dynamo.destroy(secret.uuid);
     throw new createHttpError.NotFound("Segredo não existe");
   }
 
@@ -26,8 +29,9 @@ const getSecret = async (event) => {
     throw new createHttpError.Unauthorized("Senha incorreta");
   }
 
-  const data = await setView(dynamo, encryptionKey, secret);
-  console.log(secret);
+  const data = aes256.decrypt(encryptionKey, secret.content);
+  await dynamo.update(uuid);
+
   return JsonResponse._200(data);
 }
 

@@ -15,7 +15,7 @@ export class Dynamo {
       throw new createHttpError.InternalServerError();
     }
   }
-  
+
   async get(uuid) {
     let secret;
 
@@ -33,7 +33,7 @@ export class Dynamo {
 
     return secret;
   }
-  
+
   async update(uuid) {
     let result;
 

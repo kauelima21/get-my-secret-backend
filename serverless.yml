@@ -20,8 +20,10 @@ provider:
   region: ${opt:region, 'us-east-1'}
   environment:
     SECRETS_TABLE_NAME: ${self:custom.SecretsTable.name}
-  iamRoleStatements:
-    - ${file(config/iam/SecretsTableIAM.yml):SecretsTableIAM}
+  iam:
+    role:
+      statements:
+        - ${file(config/iam/SecretsTableIAM.yml):SecretsTableIAM}
 
 resources:
   Resources:
@@ -41,4 +43,11 @@ functions:
       - http:
           method: patch
           path: /secret/{uuid}/{encryptionKey}
+          cors: true
+  destroySecret:
+    handler: src/handlers/destroySecret.handler
+    events:
+      - http:
+          method: delete
+          path: /secret/{uuid}
           cors: true
