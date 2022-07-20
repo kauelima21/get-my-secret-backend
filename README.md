@@ -6,8 +6,8 @@
 
 O projeto foi criado utilizando serverless framework com template node-aws, portanto é necessário seguir os seguintes requisitos:
 
-- AWS CLI instalado e configurado com um usuário IAM.
-- serverless framework (recomendo a instalação global).
+- [AWS CLI](https://docs.aws.amazon.com/pt_br/cli/latest/userguide/getting-started-install.html) instalado e configurado com um usuário IAM.
+- [serverless framework](https://www.serverless.com/framework/docs/getting-started) (recomendo a instalação global).
 
 Faça o clone do repositório e depois siga estes passos:
 
@@ -33,7 +33,7 @@ faça o deploy
   sls deploy --region <region>
 ```
 
-Aguarde enquanto o projeto é enviado para a aws. O serverless framework cuida disso para você ;)
+Aguarde enquanto o projeto é enviado para a aws. Não precisa configurar o API Gateway, o serverless framework cuida disso para você ; )
 
 Quando terminar você receberá as duas rotas no output do seu terminal.
 
@@ -41,7 +41,11 @@ Caso queira rodar o projeto localmente, você pode utilizar os plugins [serverle
 
 ## Como funciona?
 
-- **Primeiramente cria-se um segredo através do endpoint `post: /secret`**
+![API Serverless Bootcamp](/images/api_bootcamp.png)
+
+O client / frontend faz requisições para um endpoint gerenciado pelo API Gateway que dispara lambda functions para determinada ação. A seguir, listam-se os endpoints e seus serviços:
+
+- **Criar um segredo através do endpoint `post: /secret`**
 
   No corpo da requisição, utilize algo semelhante ao seguinte modelo:
   ```
@@ -60,7 +64,7 @@ Caso queira rodar o projeto localmente, você pode utilizar os plugins [serverle
   ```
   Caso siga o exemplo acima, atente-se ao fato de que o hash não será o mesmo.
 
-- **Para obter o segredo, acesse o endpoint `patch: secret/{uuid}/{encryptionKey}`**
+- **Para obter o segredo, acesse o endpoint `patch: /secret/{uuid}/{encryptionKey}`**
 
   Caso tenha criado um segredo com senha, informe a mesma como parâmetro no corpo da requisição:
   ```
@@ -76,6 +80,10 @@ Caso queira rodar o projeto localmente, você pode utilizar os plugins [serverle
   Atente-se ao fato de que enviar a requisição sem corpo retornará erro apenas no caso de uma segredo cadastrado com senha.
 
 - **Ao tentar a requisição acima novamente, verá que o segredo foi deletado.**
+
+- **Deletar um segredo através do endpoint `delete: /secret/{uuid}`**
+
+  Caso o segredo possua uma senha, o frontend já terá validado, visto que o referido endpoint só é acessado no momento em que o usuário receptor já validou a senha e já a visualizou.
 
 ## Tecnologias utilizadas
 
