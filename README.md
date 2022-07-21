@@ -85,6 +85,10 @@ O client / frontend faz requisições para um endpoint gerenciado pelo API Gatew
 
   Caso o segredo possua uma senha, o frontend já terá validado, visto que o referido endpoint só é acessado no momento em que o usuário receptor já validou a senha e já a visualizou.
 
+- **Verificar se possui senha através do endpoint `get: /secret/{uuid}`**
+
+  O retorno pode ser um 404 ou uma mensagem de sucesso. Rota usada para o frontend validar a existência de uma senha para o segredo.
+
 ## Tecnologias utilizadas
 
 - [Serverless Framework](https://www.serverless.com/)
