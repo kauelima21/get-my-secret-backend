@@ -51,3 +51,10 @@ functions:
           method: delete
           path: /secret/{uuid}
           cors: true
+  hasPassword:
+    handler: src/handlers/hasPassword.handler
+    events:
+      - http:
+          method: get
+          path: /secret/{uuid}
+          cors: true

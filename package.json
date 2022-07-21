@@ -22,6 +22,7 @@
     "aes256": "^1.1.0",
     "aws-sdk": "^2.1176.0",
     "http-errors": "^2.0.0",
+    "serverless": "^3.21.0",
     "short-uuid": "^4.2.0"
   }
 }

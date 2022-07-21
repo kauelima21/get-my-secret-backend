@@ -1,5 +1,5 @@
 import aes256 from "aes256";
-import middyfy from "../lib/middyfy"
+import middyfy from "../lib/middyfy";
 import createHttpError from "http-errors";
 import { Dynamo } from "../lib/dynamo";
 import { JsonResponse } from "../lib/JsonResponse";
