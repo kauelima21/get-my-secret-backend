@@ -89,6 +89,10 @@ O client / frontend faz requisições para um endpoint gerenciado pelo API Gatew
 
   O retorno pode ser um 404 ou uma mensagem de sucesso. Rota usada para o frontend validar a existência de uma senha para o segredo.
 
+## Background Job
+
+A função `destroyExpiredSecret` é executada acada minuto e verificará se o prazo de 07 (sete) dias foi ultrapassado. Caso aconteça, o segredo será destruído.
+
 ## Tecnologias utilizadas
 
 - [Serverless Framework](https://www.serverless.com/)

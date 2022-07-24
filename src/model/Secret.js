@@ -10,6 +10,6 @@ export class Secret {
     this.uuid = shortUUID.generate();
     this.content = content;
     this.views = 0;
-    this.expiration = new Date().setMinutes(new Date().getMinutes() + 2);
+    this.expiration = new Date().setDate(new Date().getDate() + 7);
   }
 }
