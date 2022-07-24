@@ -34,6 +34,23 @@ export class Dynamo {
     return secret;
   }
 
+  async scan() {
+    let secrets;
+
+    try {
+      const results = await this.dynamoDb.scan({
+        TableName: this.TableName,
+      }).promise();
+
+      secrets = results.Items;
+    } catch (err) {
+      console.log(err);
+      throw new createHttpError.InternalServerError();
+    }
+
+    return secrets;
+  }
+
   async update(uuid) {
     let result;
 

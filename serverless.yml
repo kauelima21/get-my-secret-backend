@@ -30,6 +30,7 @@ resources:
     SecretsTable: ${file(config/resources/SecretsTable.yml):SecretsTable}
 
 functions:
+  # API
   storeSecret:
     handler: src/handlers/storeSecret.handler
     events:
@@ -58,3 +59,10 @@ functions:
           method: get
           path: /secret/{uuid}
           cors: true
+  # Sheduling Task
+  destroyExpiredSecret:
+    handler: src/handlers/destroyExpiredSecret.handler
+    events:
+      - schedule:
+          rate: rate(1 minute)
+          enabled: true
