@@ -6,14 +6,7 @@ import { JsonResponse } from "../lib/JsonResponse";
 
 const getSecret = async (event) => {
   const { uuid, encryptionKey } = event.pathParameters;
-  const password = '';
-
-  if (event.body && event.body.hasOwnProperty('password')) {
-    password = event.body.password;
-  }
-
   const dynamo = new Dynamo();
-
   const secret = await dynamo.get(uuid);
 
   if (!secret) {
@@ -25,7 +18,20 @@ const getSecret = async (event) => {
     throw new createHttpError.NotFound("Segredo não existe");
   }
 
-  if (password && password !== aes256.decrypt(encryptionKey, secret.password)) {
+  if (!secret.hasOwnProperty('password')) {
+    const data = aes256.decrypt(encryptionKey, secret.content);
+    await dynamo.update(uuid);
+
+    return JsonResponse._200(data);
+  }
+
+  if (!event.body || !event.body.hasOwnProperty('password')) {
+    throw new createHttpError.Unauthorized("Você precisa informar a senha para acessar o segredo.");
+  }
+
+  const password = event.body.password;
+
+  if (password !== aes256.decrypt(encryptionKey, secret.password)) {
     throw new createHttpError.Unauthorized("Senha incorreta");
   }
 
