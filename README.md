@@ -91,7 +91,7 @@ O client / frontend faz requisições para um endpoint gerenciado pelo API Gatew
 
 ## Background Job
 
-A função `destroyExpiredSecret` é executada acada minuto e verificará se o prazo de 07 (sete) dias foi ultrapassado. Caso aconteça, o segredo será destruído.
+A função `destroyExpiredSecret` é executada a cada minuto e verificará se o prazo de 07 (sete) dias foi ultrapassado. Caso aconteça, o segredo será destruído.
 
 ## Tecnologias utilizadas
 
