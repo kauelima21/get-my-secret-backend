@@ -13,20 +13,14 @@ const storeSecret = async (event) => {
 
   const { content } = event.body;
   const encryptionKey = shortUUID.generate();
-  
+  const secret = new Secret(aes256.encrypt(encryptionKey, content));
+  const dynamo = new Dynamo();
+
+  let data = secret;
   let password = '';
 
   if (event.body.hasOwnProperty('password') && event.body.password) {
     password = aes256.encrypt(encryptionKey, event.body.password);
-  }
-
-  const secret = new Secret(aes256.encrypt(encryptionKey, content));
-
-  const dynamo = new Dynamo();
-
-  let data = secret;
-
-  if (password) {
     data = { ...data, password };
   }
 
