@@ -1,16 +1,15 @@
 {
-    "comments": false,
-    "sourceMaps": "both",
-    "plugins": ["source-map-support"],
+    "plugins": [
+        "source-map-support"
+    ],
     "presets": [
         [
             "@babel/preset-env",
             {
                 "targets": {
-                    "node": "14.20"
+                    "node": "16"
                 }
             }
         ]
     ]
 }
-
