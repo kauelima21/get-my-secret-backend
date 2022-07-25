@@ -17,7 +17,7 @@ provider:
   name: aws
   runtime: nodejs16.x
   stage: ${opt:stage, 'dev'}
-  region: ${opt:region, 'us-east-1'}
+  region: ${opt:region, 'sa-east-1'}
   environment:
     SECRETS_TABLE_NAME: ${self:custom.SecretsTable.name}
   iam:

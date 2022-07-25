@@ -29,7 +29,7 @@ faça o deploy
   // ou a versão mais curta
   sls deploy
 
-  // caso a região onde você criou seu usuário seja diferente de us-east-1, altere no arquivo serverless.yml ou faça o deploy com este comando, onde <region> é a região escolhida.
+  // caso a região onde você criou seu usuário seja diferente de sa-east-1, altere no arquivo serverless.yml ou faça o deploy com este comando, onde <region> é a região escolhida.
   sls deploy --region <region>
 ```
 
