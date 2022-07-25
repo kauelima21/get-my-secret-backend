@@ -7,7 +7,7 @@ import { Secret } from "../model/Secret";
 import { Dynamo } from "../lib/dynamo";
 
 const storeSecret = async (event) => {
-  if (!event.body && !event.body.hasOwnProperty('content') && event.body.content) {
+  if (!event.body || !event.body.hasOwnProperty('content') || !event.body.content) {
     throw new createHttpError.InternalServerError("Não pode criar segredos vazios.");
   }
 
