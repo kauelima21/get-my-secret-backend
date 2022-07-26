@@ -1,6 +1,6 @@
 # GetMySecret API
 
-> API Serverless para a criação de informações para serem acessadas em um link apenas uma vez!
+> API Serverless da aplicação feita para a criação de informações que serão acessadas atráves de um link apenas uma vez!
 
 ## Como colocar para funcionar?
 
@@ -64,30 +64,20 @@ O client / frontend faz requisições para um endpoint gerenciado pelo API Gatew
   ```
   Caso siga o exemplo acima, atente-se ao fato de que o hash não será o mesmo.
 
-- **Para obter o segredo, acesse o endpoint `patch: /secret/{uuid}/{encryptionKey}`**
+- **Para obter o segredo, acesse o endpoint `delete: /secret/{uuid}`**
 
-  Caso tenha criado um segredo com senha, informe a mesma como parâmetro no corpo da requisição:
-  ```
-    {
-      "password": "MinhaSenhaSecreta123"
-    }
-  ```
   O resultado será seu segredo:
   ```
-    "Meu segredo secreto"
+    {
+      "content": "ocXarJ42aayOjAXa836rDIJyyY6Jry20kKvH",
+	    "uuid": "fzE3ZqP83vFomnRNuX5mXK",
+    	"expiration": 1659477428588
+    }
   ```
 
-  Atente-se ao fato de que enviar a requisição sem corpo retornará erro apenas no caso de uma segredo cadastrado com senha.
+  O frontend irá descriptografar o segredo e validará a senha. Isso porque ambos foram desenvolvidos com javascript.
 
 - **Ao tentar a requisição acima novamente, verá que o segredo foi deletado.**
-
-- **Deletar um segredo através do endpoint `delete: /secret/{uuid}`**
-
-  Caso o segredo possua uma senha, o frontend já terá validado, visto que o referido endpoint só é acessado no momento em que o usuário receptor já validou a senha e já a visualizou.
-
-- **Verificar se possui senha através do endpoint `get: /secret/{uuid}`**
-
-  O retorno pode ser um 404 ou uma mensagem de sucesso. Rota usada para o frontend validar a existência de uma senha para o segredo.
 
 ## Background Job
 
