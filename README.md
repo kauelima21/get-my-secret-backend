@@ -100,6 +100,10 @@ O client / frontend faz requisições para um endpoint gerenciado pelo API Gatew
 
 A função `destroyExpiredSecret` é executada a cada minuto e verificará se o prazo de 07 (sete) dias foi ultrapassado. Caso aconteça, o segredo será destruído.
 
+## Frontend
+
+Você já pode olhar o frontend da aplicação através desse [link](https://github.com/kauelima21/get-my-secret-frontend);
+
 ## Tecnologias utilizadas
 
 - [Serverless Framework](https://www.serverless.com/)
