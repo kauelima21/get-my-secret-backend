@@ -1,7 +1,7 @@
 import middyfy from "../lib/middyfy";
 import createHttpError from "http-errors";
-import { Dynamo } from "../lib/dynamo";
 import { JsonResponse } from "../lib/JsonResponse";
+import { Dynamo } from "../lib/dynamo";
 
 const getSecret = async (event) => {
   const { uuid } = event.pathParameters;
@@ -11,8 +11,6 @@ const getSecret = async (event) => {
   if (!secret) {
     throw new createHttpError.NotFound("Segredo não existe");
   }
-
-  await dynamo.destroy(secret.uuid);
 
   return JsonResponse._200(secret);
 }

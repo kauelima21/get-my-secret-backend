@@ -13,14 +13,15 @@ const storeSecret = async (event) => {
 
   const { content } = event.body;
   const encryptionKey = shortUUID.generate();
-  const secret = new Secret(aes256.encrypt(encryptionKey, content));
+  const cipher = aes256.createCipher(encryptionKey);
+  const secret = new Secret(cipher.encrypt(content));
   const dynamo = new Dynamo();
 
   let data = secret;
   let password = '';
 
   if (event.body.hasOwnProperty('password') && event.body.password) {
-    password = aes256.encrypt(encryptionKey, event.body.password);
+    password = cipher.encrypt(event.body.password);
     data = { ...data, password };
   }
 

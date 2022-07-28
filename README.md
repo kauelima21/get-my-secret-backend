@@ -64,18 +64,35 @@ O client / frontend faz requisições para um endpoint gerenciado pelo API Gatew
   ```
   Caso siga o exemplo acima, atente-se ao fato de que o hash não será o mesmo.
 
-- **Para obter o segredo, acesse o endpoint `delete: /secret/{uuid}`**
+- **Para obter o segredo, acesse o endpoint `delete: /secret/{uuid}/{encryptionKey}`**
+
+  No corpo da requisição, utilize algo semelhante ao seguinte modelo:
+  ```
+    {
+      "password": "MinhaSenhaSecreta123"  // este parâmetro é opcional.
+    }
+  ```
 
   O resultado será seu segredo:
   ```
     {
-      "content": "ocXarJ42aayOjAXa836rDIJyyY6Jry20kKvH",
-	    "uuid": "fzE3ZqP83vFomnRNuX5mXK",
-    	"expiration": 1659477428588
+      "content": ""Meu segredo secreto",
     }
   ```
 
-  O frontend irá descriptografar o segredo e validará a senha. Isso porque ambos foram desenvolvidos com javascript.
+  Caso o segredo possua senha e esta não for informada no corpo da requisição, será retornado um erro.
+
+- **Criar um segredo através do endpoint `get: /secret/{uuid}`**
+
+  O resultado será seu segredo:
+  ```
+    {
+      "content": "sdPMo16oCmzqvIFKpvanBguPIj8/aTmgcx32",
+      "expiration": 1659623632612,
+      "uuid": "9oKgc8oGXbD99i2mLQLrmF",
+      "password": "73L9dRWryeiab53X2KZmiXKDEu2s" // se houver
+    }
+  ```
 
 - **Ao tentar a requisição acima novamente, verá que o segredo foi deletado.**
 
